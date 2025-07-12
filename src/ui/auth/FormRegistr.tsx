@@ -1,5 +1,6 @@
 "use client";
 
+import { RegistrResp } from "@/src/interfaces";
 import { saveTokens } from "@/src/utils";
 import axios from "axios";
 import React from "react";
@@ -24,13 +25,17 @@ export default function FormRegistr() {
       return; // ошибку вывести
     }
 
-    const resp = await axios.post("http://localhost:4000/api/auth/register", {
-      username: formData.username,
-      password: formData.password,
-    });
-    const data = resp.data;
+    try {
+      const resp = await axios.post("http://localhost:4000/api/auth/register", {
+        username: formData.username,
+        password: formData.password,
+      });
+      const data: RegistrResp = resp.data;
 
-    // saveTokens(data.)
+      saveTokens(data.data.accessToken, data.data.refreshToken);
+    } catch (error) {
+      console.log("Ошибка входа", error);
+    }
   };
 
   return (

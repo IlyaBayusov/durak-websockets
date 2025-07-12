@@ -4,7 +4,7 @@ export interface IBaseResponse {
   message: string;
 }
 
-interface IUser {
+export interface IUser {
   id: number;
   username: string;
   email: string;
@@ -15,26 +15,14 @@ interface IUser {
   games_won: number;
 }
 
-interface ILoginResponse {
+export interface ILoginResponse {
   accessToken: string;
+  refreshToken: string;
   user: IUser;
 }
 
-// export interface IApiResponse {
-//   ok: boolean;
-//   status: number;
-//   message: string;
-//   data: {
-//     accessToken: string;
-//     user: {
-//       id: number;
-//       username: string;
-//       email: string;
-//       created_at: string; // можно заменить на Date, если будет парсинг
-//       is_active: boolean;
-//       rating: number;
-//       games_played: number;
-//       games_won: number;
-//     };
-//   };
-// }
+export interface IApiResponse<T> extends IBaseResponse {
+  data: T;
+}
+
+export type RegistrResp = IApiResponse<ILoginResponse>;
