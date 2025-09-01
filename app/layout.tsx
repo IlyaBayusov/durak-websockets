@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Link from "next/link";
+import ReduxProvider from "@/src/ui/ReduxProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,7 +15,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body>{children}</body>
+      <body>
+        <ReduxProvider>
+          <header className="flex gap-5">
+            <Link href={"/"}>Главная страница</Link>
+            <Link href={"/test"}>Тестовая страница</Link>
+
+            <Link href={"/registr"}>Регистрация</Link>
+            <Link href={"/auth"}>Авторизация</Link>
+          </header>
+
+          {children}
+        </ReduxProvider>
+      </body>
     </html>
   );
 }

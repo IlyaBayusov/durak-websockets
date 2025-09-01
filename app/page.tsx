@@ -1,21 +1,21 @@
 "use client";
 
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { useRouter } from "next/navigation";
-
-const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
-  cache: new InMemoryCache(),
-});
+import { useAppDispatch, useAppSelector } from "@/src/hooks/redux";
+import { userSlice } from "@/src/stores/reducers/UserSlice";
 
 export default function Home() {
-  const router = useRouter();
+  const { users, count } = useAppSelector((state) => state.userReducer);
+
+  const { inc } = userSlice.actions;
+  const dispatch = useAppDispatch();
+
+  console.log(count);
 
   return (
-    <ApolloProvider client={client}>
-      <div>
-        <button onClick={() => router.push("/registr")}>Регистрация</button>
-      </div>
-    </ApolloProvider>
+    <div className="mt-10">
+      <h1>Главная</h1>
+
+      <button onClick={() => dispatch(inc(5))}>инкримент</button>
+    </div>
   );
 }

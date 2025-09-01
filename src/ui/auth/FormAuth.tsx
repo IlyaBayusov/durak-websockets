@@ -3,21 +3,22 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-interface IFormRegistr {
+type Props = {};
+
+interface IFormAuth {
   username: string;
   password: string;
-  secondPassword: string;
 }
 
-export default function FormRegistr() {
+export default function FormAuth({}: Props) {
   const {
-    formState: { isValid },
-    register,
     handleSubmit,
+    register,
     reset,
-  } = useForm<IFormRegistr>();
+    formState: { isValid },
+  } = useForm<IFormAuth>();
 
-  const onSubmit = async (formData: IFormRegistr) => {};
+  const onSubmit = async (formData: IFormAuth) => {};
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -41,19 +42,9 @@ export default function FormRegistr() {
         })}
         className="border border-black"
       />
-      <input
-        placeholder="secondPassword"
-        type="password"
-        {...register("secondPassword", {
-          required: true,
-          minLength: 8,
-          maxLength: 50,
-        })}
-        className="border border-black"
-      />
 
       <button type="submit" className="border border-black">
-        Зарегистрироваться
+        Авторизоваться
       </button>
     </form>
   );

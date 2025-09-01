@@ -1,31 +1,16 @@
 "use client";
 
 import React from "react";
-import axios from "axios";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 type Props = {};
 
 export default function Test({}: Props) {
-  const test = async () => {
-    try {
-      const resp = await axios.get("http://localhost:4000/api/ping");
+  // const dispatch = useDispatch();
+  // const users = useSelector((state) => state.users);
 
-      console.log(resp.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // console.log(users);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  return (
-    <div>
-      <form action="submit" onSubmit={handleSubmit}>
-        <input type="text" placeholder="Имя" />
-        <button type="submit">Подключиться</button>
-      </form>
-    </div>
-  );
+  return <div></div>;
 }
