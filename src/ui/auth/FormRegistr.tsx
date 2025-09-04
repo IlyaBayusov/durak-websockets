@@ -1,5 +1,9 @@
 "use client";
 
+import { api } from "@/src/axios";
+import { RegistrResp } from "@/src/interfaces";
+import { saveTokens } from "@/src/utils";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -17,7 +21,33 @@ export default function FormRegistr() {
     reset,
   } = useForm<IFormRegistr>();
 
-  const onSubmit = async (formData: IFormRegistr) => {};
+  const router = useRouter();
+
+  const onSubmit = async (formData: IFormRegistr) => {
+    try {
+      const response = await api.post("/auth/register", {
+        username: formData.username,
+        password: formData.password,
+      });
+      const data: RegistrResp = response.data;
+
+      if (!data) {
+        throw new Error("Ошибка регистрации, нет data");
+      }
+      const respTokens = saveTokens(
+        data.data.accessToken,
+        data.data.refreshToken
+      );
+
+      if (respTokens) {
+        router.push("/");
+      } else {
+        throw new Error("Ошибка сохранения токенов");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
